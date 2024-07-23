@@ -32,8 +32,8 @@ func main () {
 	}
 
 	fmt.Println("Number of minutes:", minute)
-	//timer1 := time.NewTimer(minute * time.Minute)
-	timer1 := time.NewTimer(minute * time.Second)
+	timer1 := time.NewTimer(minute * time.Minute)
+	//timer1 := time.NewTimer(minute * time.Second)
 	fmt.Println("Timer starts now")
 	<-timer1.C
 	fmt.Println("Timer ends")
