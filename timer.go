@@ -5,6 +5,8 @@ import (
 	"time"
 	"os"
 	"strconv"
+	"github.com/faiface/beep/mp3"
+	"github.com/faiface/beep/speaker"
 )
 
 //convert str from Input/Argument to time.Duration for timer
@@ -35,5 +37,27 @@ func main () {
 	fmt.Println("Timer starts now")
 	<-timer1.C
 	fmt.Println("Timer ends")
+
+	/*
+	All nonsense below is for making a funny sound
+	when timer ends. Maybe it is titally unnecessary,
+	but I already found package for it. 
+	It is what it is
+	*/
+	
+	f, err := os.Open("amogus.mp3")
+	if err != nil {
+		panic(err)
+	}
+	
+	streamer, format, err := mp3.Decode(f)
+	if err != nil {
+		panic(err)
+	}
+	defer streamer.Close()
+
+	speaker.Init(format.SampleRate, format.SampleRate.N(time.Second/10))
+	speaker.Play(streamer)
+	select {}
 }
 
