@@ -7,7 +7,7 @@ import (
 	"strconv"
 )
 
-//convert str from Argument to time.Duration for timer
+//convert str from Input/Argument to time.Duration for timer
 func argToTime(str string) time.Duration {
 	i, err := strconv.Atoi(str)
 	if err != nil {
@@ -17,12 +17,21 @@ func argToTime(str string) time.Duration {
 }
 
 func main () {
-	minute := argToTime(os.Args[1])
-	fmt.Println("Number minutes:", minute)
+	var minute time.Duration
+	var x string
+	
+	//check for Args
+	if len(os.Args) < 2 {
+		fmt.Print("Enter a number of minutes:\n>")
+		fmt.Scanln(&x)
+		minute = argToTime(x)
+	} else {
+		minute = argToTime(os.Args[1])
+	}
 
-	//TODO: what if there is no arguments?
-
-	timer1 := time.NewTimer(minute * time.Minute)
+	fmt.Println("Number of minutes:", minute)
+	//timer1 := time.NewTimer(minute * time.Minute)
+	timer1 := time.NewTimer(minute * time.Second)
 	fmt.Println("Timer starts now")
 	<-timer1.C
 	fmt.Println("Timer ends")
